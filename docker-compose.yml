@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./Frontend
+    ports:
+      - "7001:80"
+    networks:
+      - app_network
+
+  hr:
+    build: ./HR
+    ports:
+      - "7002:80"
+    networks:
+      - app_network
+
+  view_offer:
+    build: ./View_offer
+    ports:
+      - "7003:80"
+    networks:
+      - app_network
+
+  backend:
+    build: ./Backend
+    ports:
+      - "3216:3216"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin234
+      POSTGRES_DB: job_applications
+    depends_on:
+      - postgres
+    networks:
+      - app_network
+
+  postgres:
+    image: postgres:13
+    container_name: postgres65
+    ports:
+      - "5445:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin234
+      POSTGRES_DB: job_applications
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+
