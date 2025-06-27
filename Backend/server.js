@@ -11,14 +11,14 @@ const sharp = require('sharp');
 const PDFDocument = require('pdfkit');
 
 const app = express();
-const port = 3000;
+const port = 3216;
 
 // PostgreSQL configuration
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     database: 'job_applications',
-    password: 'Veera@0134',
+    password: 'admin234',
     port: 5432,
 });
 
